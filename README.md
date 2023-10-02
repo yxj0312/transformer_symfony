@@ -91,7 +91,7 @@ Sure! Here's an example of how you might use the DoctrineApplicationRepository c
 
 In this example, we first instantiate the DoctrineEntityManager and pass it to the DoctrineApplicationRepository constructor. We then create a new Application entity, set its properties, and save it to the database using the save method of the DoctrineApplicationRepository. We then retrieve the Application entity by ID, update its description, and save the changes to the database. Finally, we delete the Application entity from the database using the delete method of the DoctrineApplicationRepository.
 
-```php 
+```php
 // Instantiate the Doctrine EntityManager
 $entityManager = EntityManager::create($connectionParams, $config);
 
@@ -119,3 +119,6 @@ $applicationRepository->save($application);
 // Delete the Application entity from the database
 $applicationRepository->delete($application);
 ```
+
+## Recipes
+
