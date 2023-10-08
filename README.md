@@ -124,14 +124,27 @@ Application
 Builder
     Application
 Command
+    ApplicationCommand
+    DeleteApplicationCommand
+    ...
 Contract
     Mailer
+        ApplicationAdminMailerInterface
     Repository
         ApplicationRepositoryInterface  // ApplicationRepository
 Exception
 Request
+    AbstractApplicationRequest
 Service
+    SendDailySummarization
 ValueofObject
+    ApplicationId
+    ApprovalId
+    Birthday
+    BlacklistedId
+    ExchangePeriod
 View
+    ApplicationEmailView
+    ApplicationInvestigateEmailView
 
 ## Recipes
