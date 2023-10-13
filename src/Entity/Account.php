@@ -8,5 +8,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 
 class Account implements UserInterface, PasswordAuthenticatedUserInterface, PasswordHasherAwareInterface {
+    
 
 }
