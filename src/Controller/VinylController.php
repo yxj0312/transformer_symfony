@@ -9,7 +9,7 @@ use function Symfony\Component\String\u;
 
 class VinylController extends AbstractController
 {    
-    #[Route('/')]
+    #[Route('/', 'app_homepage')]
     public function homepage(): Response
     {
        return $this->render('vinyl/homepage.html.twig'
@@ -20,7 +20,7 @@ class VinylController extends AbstractController
        );
     }
 
-     #[Route('/browse/{slug}')]
+    #[Route('/browse/{slug}')]
     public function browse(string $slug = null): Response
     {
         if ($slug) {
