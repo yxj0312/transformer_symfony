@@ -1,48 +1,62 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
+use App\Domain\Account\Contract\EmailAddress;
+use App\Domain\User\Contact\UserRepositoryInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<User>
- *
- * @method User|null find($id, $lockMode = null, $lockVersion = null)
- * @method User|null findOneBy(array $criteria, array $orderBy = null)
- * @method User[]    findAll()
- * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
-class UserRepository extends ServiceEntityRepository
+final class UserRepository implements UserRepositoryInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    /**
+     * @var EntityRepository<User>
+     */
+    private $repository;
+
+    /**
+     * @var EntityManagerInterface 
+     */
+    private $entityManager;
+
+    /**
+     * UserRepository constructor.
+     *
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct($registry, User::class);
+        $this->repository = $entityManager->getRepository(User::class);
+        $this->entityManager = $entityManager;
     }
 
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @throws \Exception
+     *
+     * @param EmailAddress $emailAddress
+     * @return User
+     */    
+    public function findByEmail(EmailAddress $emailAddress): User
+    {
+        $user = $this->repository->findOneBy(['email' => $emailAddress->__toString()]);
 
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if (!$user instanceof User) {
+            throw new \Exception('User not found');
+        }
+        return $user;
+    }
+
+    public function findById(UserId $id): User
+    {
+        return $this->repository->find($id->toInt());
+    }
+
+    public function save(User $user): void
+    {
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
 }
