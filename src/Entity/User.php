@@ -45,6 +45,9 @@ class User
     private ?bool $is_verified = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    private ?string $password_reset_token = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $verification_token = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -205,6 +208,18 @@ class User
     public function setUpdatedAt(\DateTimeInterface $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getPasswordResetToken(): ?string
+    {
+        return $this->password_reset_token;
+    }
+
+    public function setPasswordResetToken(?string $password_reset_token): static
+    {
+        $this->password_reset_token = $password_reset_token;
 
         return $this;
     }
