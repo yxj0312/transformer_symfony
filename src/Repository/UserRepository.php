@@ -49,10 +49,10 @@ final class UserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    public function findById(UserId $id): User
-    {
-        return $this->repository->find($id->toInt());
-    }
+    // public function findById(UserId $id): User
+    // {
+    //     return $this->repository->find($id->toInt());
+    // }
 
     public function save(User $user): void
     {
