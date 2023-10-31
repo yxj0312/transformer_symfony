@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Domain\Account\Contract\EmailAddress;
 use App\Domain\User\Contact\UserRepositoryInterface;
+use App\Domain\User\ValueObject\UserId;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use App\Entity\User;
@@ -49,10 +50,10 @@ final class UserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    // public function findById(UserId $id): User
-    // {
-    //     return $this->repository->find($id->toInt());
-    // }
+    public function findById(UserId $id): User
+    {
+        return $this->repository->find($id->toInt());
+    }
 
     public function save(User $user): void
     {
