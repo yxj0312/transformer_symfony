@@ -107,3 +107,106 @@ Of course, I can guide you through the process of creating a `UserService`, `Use
    You can repeat steps 2-4 for other methods you want to add to the `UserService`.
 
 By following this process, you develop your `UserService` while making sure that it behaves as expected through unit tests. You can repeat this process for the `UserRepository` and any other services you need.
+
+Certainly, let's add methods for creating, updating, and deleting a user in the `UserService`. First, we'll add tests for these methods, and then we'll implement the methods and test them. Here's how you can do it step by step:
+
+1. **Add Test Methods:**
+
+   In your `UserServiceTest.php`, add test methods for creating, updating, and deleting users:
+
+   ```php
+   // tests/Service/UserServiceTest.php
+
+   // ... Existing code ...
+
+   public function testCreateUser()
+   {
+       // Your test for creating a user here.
+   }
+
+   public function testUpdateUser()
+   {
+       // Your test for updating a user here.
+   }
+
+   public function testDeleteUser()
+   {
+       // Your test for deleting a user here.
+   }
+   ```
+
+2. **Write the Tests for Creating, Updating, and Deleting Users:**
+
+   For the `testCreateUser`, `testUpdateUser`, and `testDeleteUser` methods, you can set up the necessary test data, call the corresponding methods on the `UserService`, and then assert that the expected actions have been taken or the expected results have been achieved.
+
+   For example:
+
+   ```php
+   public function testCreateUser()
+   {
+       $userData = [
+           'name' => 'John Doe',
+           'email' => 'john@example.com',
+           // Other user data...
+       ];
+
+       $user = $this->userService->createUser($userData);
+
+       $this->assertInstanceOf(User::class, $user);
+       $this->assertSame('John Doe', $user->getName());
+       // Other assertions...
+   }
+
+   // Similar tests for updateUser and deleteUser
+   ```
+
+3. **Implement the Methods in UserService:**
+
+   In your `UserService` class, you can now implement the methods for creating, updating, and deleting users.
+
+   ```php
+   // src/Service/UserService.php
+
+   // ... Existing code ...
+
+   public function createUser(array $userData): User
+   {
+       // Create and persist a new user entity.
+       $user = new User();
+       $user->setName($userData['name']);
+       $user->setEmail($userData['email']);
+       // Set other user data...
+
+       // You may want to use Doctrine EntityManager to persist the user.
+       $this->entityManager->persist($user);
+       $this->entityManager->flush();
+
+       return $user;
+   }
+
+   public function updateUser(User $user, array $userData): User
+   {
+       // Update the user entity with new data and persist the changes.
+       $user->setName($userData['name']);
+       $user->setEmail($userData['email']);
+       // Update other user data...
+
+       // You may want to use Doctrine EntityManager to persist the changes.
+       $this->entityManager->flush();
+
+       return $user;
+   }
+
+   public function deleteUser(User $user)
+   {
+       // Delete the user entity.
+       $this->entityManager->remove($user);
+       $this->entityManager->flush();
+   }
+   ```
+
+4. **Update the Tests:**
+
+   Now, update the test methods to properly assert the results based on the behavior of the implemented methods. Run the tests to verify that everything works as expected.
+
+This process allows you to incrementally develop your `UserService` while ensuring that it behaves correctly by writing tests first and then implementing the methods.
