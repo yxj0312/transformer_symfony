@@ -29,6 +29,12 @@ class User
     #[ORM\Column]
     private ?int $role_id = null;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
+     * @ORM\JoinColumn(name="role_id", referencedColumnName="id")
+     */
+    private ?Role $role = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $first_name = null;
 
@@ -112,6 +118,18 @@ class User
     public function setRoleId(int $role_id): static
     {
         $this->role_id = $role_id;
+
+        return $this;
+    }
+
+    public function getRole(): ?Role
+    {
+        return $this->role;
+    }
+
+    public function setRole(Role $role): static
+    {
+        $this->role = $role;
 
         return $this;
     }
