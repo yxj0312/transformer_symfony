@@ -110,18 +110,6 @@ class User
         return $this;
     }
 
-    public function getRoleId(): ?int
-    {
-        return $this->role_id;
-    }
-
-    public function setRoleId(int $role_id): static
-    {
-        $this->role_id = $role_id;
-
-        return $this;
-    }
-
     public function getRole(): ?Role
     {
         return $this->role;
