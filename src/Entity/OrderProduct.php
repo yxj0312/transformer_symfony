@@ -32,4 +32,37 @@ class OrderProduct
 
         return $this;
     }
+
+    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'orderProducts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Order $order = null;
+
+    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'orderProducts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Product $product = null;
+
+    public function getOrder(): ?Order
+    {
+        return $this->order;
+    }
+
+    public function setOrder(Order $order): static
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(Product $product): static
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+    
 }
