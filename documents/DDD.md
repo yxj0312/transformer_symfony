@@ -344,3 +344,82 @@ class SomeApplicationService
 ```
 
 These are simplified examples, and in a real-world scenario, you'd likely have more methods, validations, and additional considerations in your classes. Ensure to adapt the code based on your specific business requirements and coding standards.
+
+In a Domain-Driven Design (DDD) structure within Symfony, you typically don't have a standalone "Entity" folder at the top level. Instead, entities are part of the respective domain's structure, under the "Model" directory. Here's how you might organize it:
+
+### Symfony Project Structure with DDD Principles
+
+```plaintext
+src/
+|-- Domain/
+|   |-- Product/
+|   |   |-- Model/
+|   |   |   |-- Product.php
+|   |   |-- Repository/
+|   |   |   |-- ProductRepository.php
+|   |   |-- Service/
+|   |       |-- ProductService.php
+|   |
+|   |-- User/
+|   |   |-- Model/
+|   |   |   |-- User.php
+|   |   |-- Repository/
+|   |   |   |-- UserRepository.php
+|   |   |-- Service/
+|   |       |-- UserService.php
+|   |
+|   |-- Order/
+|   |   |-- Model/
+|   |   |   |-- Order.php
+|   |   |   |-- Cart.php
+|   |   |   |-- Payment.php
+|   |   |-- Repository/
+|   |   |   |-- OrderRepository.php
+|   |   |-- Service/
+|   |       |-- OrderService.php
+|   |
+|   |-- Review/
+|   |   |-- Model/
+|   |   |   |-- Review.php
+|   |   |-- Repository/
+|   |   |   |-- ReviewRepository.php
+|   |
+|   |-- Coupon/
+|       |-- Model/
+|       |   |-- Coupon.php
+|       |-- Repository/
+|           |-- CouponRepository.php
+|
+|-- Infrastructure/
+|   |-- Persistence/
+|   |   |-- Doctrine/
+|   |       |-- DoctrineProductRepository.php
+|   |       |-- DoctrineUserRepository.php
+|   |       |-- DoctrineOrderRepository.php
+|   |       |-- DoctrineReviewRepository.php
+|   |       |-- DoctrineCouponRepository.php
+|
+|-- Application/
+|   |-- Service/
+|       |-- SomeApplicationService.php
+|
+|-- Presentation/
+|   |-- Controller/
+|       |-- SomeController.php
+|
+|-- Resources/
+    |-- views/
+    |-- config/
+```
+
+In this structure:
+
+- **`Model/` Directory:** Each domain has a `Model/` directory containing the entities (e.g., `Product.php`, `User.php`) representing the core business objects.
+
+- **`Repository/` Directory:** Contains repository interfaces and implementations responsible for data access.
+
+- **`Service/` Directory:** Contains service classes responsible for encapsulating business logic.
+
+- **`Infrastructure/` Directory:** Holds the infrastructure-related code, such as Doctrine repositories.
+
+This structure emphasizes the organization of code around business domains, making it more aligned with DDD principles. Each domain encapsulates its entities, services, and repositories. The use of an "Entity" folder is avoided in favor of integrating entities directly into the domain they belong to.
