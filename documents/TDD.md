@@ -1,4 +1,4 @@
-Certainly! Test-Driven Development (TDD) is a development approach where tests are written before the actual code. Let's go through an example of how you might use TDD for a simple feature in your Symfony project, focusing on the `UserService` in the User domain.
+LoCertainly! Test-Driven Development (TDD) is a development approach where tests are written before the actual code. Let's go through an example of how you might use TDD for a simple feature in your Symfony project, focusing on the `UserService` in the User domain.
 
 ### Example: TDD for UserService
 
@@ -199,3 +199,89 @@ In this feature test:
 - We first register a new user, then login, and finally check if the user has the expected role on the dashboard.
 
 These examples illustrate the difference in focus between unit tests and feature tests. Unit tests concentrate on isolated units of code, while feature tests validate the behavior of the entire system or a significant part of it. The combination of both types of tests provides a comprehensive approach to testing your Symfony application.
+
+Certainly! Let's continue with more examples of tests in the domain, specifically focusing on the `Product` entity and related functionality.
+
+### Example: Product Domain Tests
+
+#### 1. Unit Test - ProductService
+
+Assuming you have a `ProductService` responsible for managing products, let's create a unit test for adding a product:
+
+```php
+// tests/Domain/Product/Service/ProductServiceTest.php
+
+use App\Domain\Product\Service\ProductService;
+use App\Domain\Product\Model\Product;
+use PHPUnit\Framework\TestCase;
+
+class ProductServiceTest extends TestCase
+{
+    public function testAddProduct()
+    {
+        $productService = new ProductService(/* Dependencies go here */);
+        $product = new Product('Laptop', 'Powerful laptop with high performance', 1200.00);
+
+        $productService->addProduct($product);
+
+        $this->assertTrue($product->getId() !== null);
+        // Add more assertions based on your business logic and expectations.
+    }
+}
+```
+
+This unit test focuses on the `addProduct` method of the `ProductService`, verifying that a product is successfully added.
+
+#### 2. Feature Test - Product Listing
+
+Let's create a feature test that ensures products are listed on a product listing page:
+
+```php
+// tests/Feature/ProductListingTest.php
+
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+class ProductListingTest extends WebTestCase
+{
+    public function testProductListing()
+    {
+        $client = static::createClient();
+
+        // Simulate a request to the product listing page
+        $client->request('GET', '/products');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('.product-item', 'Laptop');
+        // Add more assertions based on your business logic and expectations.
+    }
+}
+```
+
+In this feature test, we simulate a request to the product listing page and assert that the response is successful. We also check if the product with the name 'Laptop' is present on the page.
+
+#### 3. Unit Test - Product Model
+
+For the `Product` entity, create a unit test to ensure its behavior, perhaps validating that the price is formatted correctly:
+
+```php
+// tests/Domain/Product/Model/ProductTest.php
+
+use App\Domain\Product\Model\Product;
+use PHPUnit\Framework\TestCase;
+
+class ProductTest extends TestCase
+{
+    public function testPriceFormatting()
+    {
+        $product = new Product('Smartphone', 'High-end smartphone', 899.99);
+
+        $formattedPrice = $product->getFormattedPrice();
+
+        $this->assertEquals('$899.99', $formattedPrice);
+    }
+}
+```
+
+This unit test focuses on the behavior of the `Product` entity, specifically the `getFormattedPrice` method.
+
+Feel free to adapt these examples based on your actual business logic and requirements. Additionally, consider including tests for edge cases, validation scenarios, and any other important aspects of your `Product` domain.
