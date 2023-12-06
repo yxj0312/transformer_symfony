@@ -1,4 +1,4 @@
-LoCertainly! Test-Driven Development (TDD) is a development approach where tests are written before the actual code. Let's go through an example of how you might use TDD for a simple feature in your Symfony project, focusing on the `UserService` in the User domain.
+looLoCertainly! Test-Driven Development (TDD) is a development approach where tests are written before the actual code. Let's go through an example of how you might use TDD for a simple feature in your Symfony project, focusing on the `UserService` in the User domain.
 
 ### Example: TDD for UserService
 
@@ -285,3 +285,89 @@ class ProductTest extends TestCase
 This unit test focuses on the behavior of the `Product` entity, specifically the `getFormattedPrice` method.
 
 Feel free to adapt these examples based on your actual business logic and requirements. Additionally, consider including tests for edge cases, validation scenarios, and any other important aspects of your `Product` domain.
+
+Certainly! Let's walk through a Test-Driven Development (TDD) example for the `Brand` domain, assuming you have a `Brand` entity and a `BrandService` responsible for managing brands.
+
+### Example: Brand Domain TDD
+
+#### 1. Unit Test - BrandService
+
+Start with a unit test for the `BrandService` to add a new brand:
+
+```php
+// tests/Domain/Brand/Service/BrandServiceTest.php
+
+use App\Domain\Brand\Service\BrandService;
+use App\Domain\Brand\Model\Brand;
+use PHPUnit\Framework\TestCase;
+
+class BrandServiceTest extends TestCase
+{
+    public function testAddBrand()
+    {
+        $brandService = new BrandService(/* Dependencies go here */);
+        $brand = new Brand('Nike', 'Sports and casual footwear');
+
+        $brandService->addBrand($brand);
+
+        $this->assertTrue($brand->getId() !== null);
+        // Add more assertions based on your business logic and expectations.
+    }
+}
+```
+
+This unit test focuses on the `addBrand` method of the `BrandService`, verifying that a new brand can be added.
+
+#### 2. Feature Test - Brand Listing
+
+Create a feature test to ensure brands are listed on a brand listing page:
+
+```php
+// tests/Feature/BrandListingTest.php
+
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+class BrandListingTest extends WebTestCase
+{
+    public function testBrandListing()
+    {
+        $client = static::createClient();
+
+        // Simulate a request to the brand listing page
+        $client->request('GET', '/brands');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('.brand-item', 'Nike');
+        // Add more assertions based on your business logic and expectations.
+    }
+}
+```
+
+In this feature test, we simulate a request to the brand listing page and assert that the response is successful. We also check if the brand with the name 'Nike' is present on the page.
+
+#### 3. Unit Test - Brand Model
+
+For the `Brand` entity, create a unit test to ensure its behavior, perhaps validating the uniqueness of brand names:
+
+```php
+// tests/Domain/Brand/Model/BrandTest.php
+
+use App\Domain\Brand\Model\Brand;
+use PHPUnit\Framework\TestCase;
+
+class BrandTest extends TestCase
+{
+    public function testBrandNameUniqueness()
+    {
+        $brand1 = new Brand('Adidas', 'Sports brand');
+        $brand2 = new Brand('Adidas', 'Another sports brand');
+
+        $this->expectException(\DomainException::class);
+        $brand1->setName($brand2->getName());
+    }
+}
+```
+
+This unit test focuses on the behavior of the `Brand` entity, specifically checking if it throws an exception when attempting to set a non-unique brand name.
+
+These examples showcase a TDD approach for the `Brand` domain, starting with tests and gradually implementing the corresponding functionality. Adapt these examples based on your actual business logic and requirements.
