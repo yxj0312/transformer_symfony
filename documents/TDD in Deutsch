@@ -1,0 +1,80 @@
+Natürlich, gerne! Beim Test-Driven Development (TDD) folgt man dem Zyklus "Red-Green-Refactor". Hier ist ein vereinfachtes Beispiel, wie Sie TDD für die `Product`-Entität im Online-Shop durchführen könnten:
+
+### Schritt 1: Schreiben Sie einen fehlschlagenden Test (Red)
+
+Erstellen Sie einen Test, der das erwartete Verhalten Ihrer `Product`-Entität beschreibt. In diesem Beispiel verwenden wir PHPUnit für PHP:
+
+```php
+// tests/Entity/ProductTest.php
+
+use PHPUnit\Framework\TestCase;
+use App\Entity\Product;
+
+class ProductTest extends TestCase
+{
+    public function testProductCanBeCreated()
+    {
+        $product = new Product(1, 'Test Product', 29.99);
+
+        $this->assertInstanceOf(Product::class, $product);
+    }
+}
+```
+
+### Schritt 2: Implementieren Sie das Minimum, um den Test zu bestehen (Green)
+
+```php
+// src/Entity/Product.php
+
+class Product
+{
+    private $id;
+    private $name;
+    private $price;
+
+    public function __construct(int $id, string $name, float $price)
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->price = $price;
+    }
+
+    // Getter-Methoden hier...
+
+    // Beispiel: Getter für ID
+    public function getId(): int
+    {
+        return $this->id;
+    }
+}
+```
+
+### Schritt 3: Refactoring (Optional)
+
+In diesem Fall gibt es nicht viel, was refaktoriert werden muss, da die `Product`-Entität relativ einfach ist. In realen Szenarien könnte Refactoring notwendig sein, um den Code zu verbessern oder die Struktur anzupassen.
+
+### Schritt 4: Schreiben Sie weitere Tests (Iteration)
+
+Fügen Sie weitere Tests hinzu, um sicherzustellen, dass die `Product`-Entität alle erwarteten Funktionen hat. Dies könnte das Testen von Getter-Methoden, das Überprüfen von Wertzuweisungen oder das Hinzufügen von Validierungen umfassen.
+
+```php
+// tests/Entity/ProductTest.php
+
+// ...
+
+class ProductTest extends TestCase
+{
+    // ...
+
+    public function testProductHasCorrectId()
+    {
+        $product = new Product(1, 'Test Product', 29.99);
+
+        $this->assertEquals(1, $product->getId());
+    }
+
+    // Weitere Tests hier...
+}
+```
+
+Wiederholen Sie diesen Zyklus für jede Funktionalität oder Anforderung Ihrer `Product`-Entität. TDD hilft, sicherzustellen, dass Ihr Code korrekt funktioniert und erleichtert spätere Änderungen, da Sie schnell feststellen können, ob etwas kaputt gegangen ist.
