@@ -10,5 +10,17 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserControllerTest extends WebTestCase
 {
-    
+    public function testIndex()
+    {
+        $client = static::createClient();
+
+        // Make request
+        $client->request('GET', '/user/');
+
+        // Assert response status code
+        $this->assertResponseIsSuccessful();
+
+        // Assert response content
+        $this->assertSelectorTextContains('h1', 'User index');
+    }
 }
