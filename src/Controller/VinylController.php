@@ -12,6 +12,8 @@ class VinylController extends AbstractController
     #[Route('/', 'app_homepage')]
     public function homepage(): Response
     {
+        die();
+        dd('hello');
        return $this->render('vinyl/homepage.html.twig'
        , [
               'title' => 'Vinyl Record Database',
