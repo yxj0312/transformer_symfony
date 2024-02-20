@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 
 namespace App\Domain\User\ValueObject;
 
@@ -35,4 +35,4 @@ final class UserId implements Stringable
     {
         return $this->id;
     }
-}
+} -->
