@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 namespace App\Service;
 
    use App\Repository\UserRepository;
@@ -18,4 +18,4 @@ namespace App\Service;
        }
 
        // Other user-related operations
-   }
+   } -->
